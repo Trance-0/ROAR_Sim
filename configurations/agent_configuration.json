@@ -5,7 +5,7 @@
       "location": {
         "x": 1.6,
         "y": 1.7,
-        "z": 0
+        "z": 0.0
       },
       "rotation": {
         "pitch": 0.0,
@@ -22,7 +22,7 @@
       "location": {
         "x": 1.6,
         "y": 1.7,
-        "z": 0
+        "z": 0.0
       },
       "rotation": {
         "pitch": 0.0,
@@ -39,7 +39,7 @@
       "location": {
         "x": -1.5,
         "y": 1.4,
-        "z": 0
+        "z": 0.0
       },
       "rotation": {
         "pitch": 180.0,
@@ -50,14 +50,14 @@
     "image_size_x": 800,
     "image_size_y": 600
   },
-  "waypoint_file_path": "./ROAR_Sim/data/easy_map_waypoints.txt",
-  "pid_config_file_path": "./ROAR_Sim/configurations/pid_config.json",
-  "simple_waypoint_local_planner_config_file_path": "./ROAR_Sim/configurations/simple_waypoint_local_planner_config.json",
+  "waypoint_file_path": "./ROAR_Sim/data/easy_map_waypoints_final.txt",
+  "pid_config_file_path": "./ROAR_Sim/configurations/pid_configure_standard_LastResort.json",
+  "simple_waypoint_local_planner_config_file_path": "./ROAR_Sim/configurations/simple_waypoint_local_planner_config_LastResort.json",
   "output_data_folder_path": "./data/output",
   "enable_autopilot": true,
   "spawn_point_id": 1,
   "show_sensors_data": true,
   "save_sensor_data": false,
-  "max_speed": 100
+  "max_speed":300
 }
 

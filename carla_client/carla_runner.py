@@ -18,7 +18,7 @@ from ROAR.utilities_module.vehicle_models import VehicleControl
 import json
 from typing import Optional
 import numpy as np
-import cv2
+
 class CarlaRunner:
 
     def __init__(self,
@@ -72,6 +72,7 @@ class CarlaRunner:
             self.client = carla.Client(self.carla_settings.host,
                                        self.carla_settings.port)
             self.client.set_timeout(self.carla_settings.timeout)
+
             self.display = pygame.display.set_mode(
                 (self.carla_settings.width, self.carla_settings.height),
                 pygame.HWSURFACE | pygame.DOUBLEBUF)
@@ -121,8 +122,10 @@ class CarlaRunner:
                                                                               world=self.world,
                                                                               clock=clock)
 
-                self.agent_collision_counter = self.get_num_collision()
-                if self.competition_mode and self.agent_collision_counter > self.max_collision:
+                collision_sensor: CollisionSensor = self.world.collision_sensor
+
+                if self.competition_mode and len(collision_sensor.history) > self.max_collision:
+                    self.agent_collision_counter = len(collision_sensor.history)
                     should_continue = False
 
                 if not should_continue:
@@ -160,13 +163,9 @@ class CarlaRunner:
 
     def on_finish(self):
         self.logger.debug("Ending Game")
-
-        if self.agent is not None:
-            self.end_vehicle_position = self.agent.vehicle.transform.location.to_array()
-        else:
-            self.end_vehicle_position = self.start_vehicle_position
+        self.end_simulation_time = self.world.hud.simulation_time
+        self.end_vehicle_position = self.agent.vehicle.transform.location.to_array()
         if self.world is not None:
-            self.end_simulation_time = self.world.hud.simulation_time
             self.world.destroy()
             self.logger.debug("All actors are destroyed")
         try:
@@ -227,7 +226,3 @@ class CarlaRunner:
             self.npc_agent_class(vehicle=actor, agent_settings=npc_config): actor for actor, npc_config in
             self.world.npcs_mapping.values()
         }
-
-    def get_num_collision(self):
-        collision_sensor: CollisionSensor = self.world.collision_sensor
-        return len(collision_sensor.history)

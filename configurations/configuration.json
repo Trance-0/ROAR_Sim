@@ -18,17 +18,17 @@
     "carla_vehicle_blueprint_filter": "vehicle.tesla.model3",
     "role_name": "hero",
     "car_color": {
-      "r": 255,
-      "g": 0,
-      "b": 0,
+      "r":  232,
+      "g":  254,
+      "b": 182,
       "a": 255
     },
     "gamma": 2.2,
     "print_keyboard_hint": false,
     "no_rendering_mode": false,
-    "synchronous_mode": false,
+    "synchronous_mode": true,
     "fixed_delta_seconds": 0.05,
     "npc_config_file_path": "./ROAR_Sim/configurations/npc_config.json",
-    "should_spawn_npcs": false,
+    "should_spawn_npcs": true,
     "save_semantic_segmentation": false
 }

@@ -30,9 +30,6 @@ class World(object):
         self.carla_settings: CarlaConfig = carla_settings
         self.agent_settings: AgentConfig = agent_settings
         self.carla_world: carla.World = carla_world
-
-        self.clean_spawned_all_actors()
-
         self.actor_role_name = carla_settings.role_name
         try:
             self.map = self.carla_world.get_map()
@@ -185,8 +182,6 @@ class World(object):
         for npc, _ in self.npcs_mapping.values():
             npc.destroy()
 
-        self.clean_spawned_all_actors()
-
     def set_weather(self, new_weather: carla.WeatherParameters):
         self.carla_world.weather = new_weather
 
@@ -258,7 +253,7 @@ class World(object):
             else:
                 self.logger.error(f"Unable to set attribute [{key}] "
                                   f"for blueprint [{blueprint_filter}]")
-        # self.logger.debug(f"Spawning {blueprint} at {transform}")
+
         return self.carla_world.spawn_actor(blueprint, transform,
                                             self.player, attachment)
 
@@ -315,13 +310,3 @@ class World(object):
             except Exception as e:
                 self.logger.error(f"Failed to Spawn NPC {'default'}."
                                   f"Error: {e}")
-
-    def clean_spawned_all_actors(self):
-        """
-        This function is to clean all actors that are not traffic light/signals
-        Returns:
-
-        """
-        for actor in self.carla_world.get_actors():
-            if "traffic" not in actor.type_id and "spectator" not in actor.type_id:
-                actor.destroy()
